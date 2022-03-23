@@ -97,11 +97,12 @@ async def send_word(message: types.Message, state: FSMContext, start_text):
     prev_message = data.get('prev_message')
     prev_voice = data.get('prev_voice')
     passed_count = data.get('passed_count')
+    prev_word = data.get('word')
     if prev_voice:
         await prev_voice.delete()
     await prev_message.delete()
     if passed_count >= 15:
-        answer_text = 'Хотите повторить пройденые слова?'
+        answer_text = f'{prev_word.original} переводится как {prev_word.translate}\n\nХотите повторить пройденые слова?'
         answer = await bot.send_message(message.chat.id, answer_text,
                                         reply_markup=InlineKeyboardMarkup(inline_keyboard=[
                                             [
